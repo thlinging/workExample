@@ -23,3 +23,9 @@ pnpm-debug.log*
 
 package-lock.json
 yarn.lock
+
+# local-only files
+.claude/settings.local.json
+.playwright-mcp/
+src/directives.zip
+/ueditor-*.png
