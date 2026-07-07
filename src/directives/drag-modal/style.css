@@ -1,0 +1,20 @@
+/* 头部作为拖拽把手：默认 move 光标，提示可拖动 */
+.v-drag-modal-target .ant-modal-header {
+  cursor: move;
+  user-select: none;
+}
+
+/* 拖拽进行中：抓取态光标 + 禁选，避免拖拽时选中文字 */
+.v-drag-modal-target.v-drag-modal--dragging,
+.v-drag-modal-target.v-drag-modal--dragging .ant-modal-header {
+  cursor: grabbing;
+}
+
+.v-drag-modal-target.v-drag-modal--dragging {
+  user-select: none;
+}
+
+/* 关闭按钮区域保持指针手势，不被 move 覆盖 */
+.v-drag-modal-target .ant-modal-close {
+  cursor: pointer;
+}

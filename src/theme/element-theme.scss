@@ -1,0 +1,9 @@
+// element-ui 主题入口 —— 唯一的 scss 文件。
+// 主题变量（$--color-primary 等）不写在这里：由 vue.config.js 经 sass-loader 的
+// additionalData 注入，源头是 src/theme/presets.js（与 antd 的 modifyVars 同源）。
+// 这里只负责字体路径与引入 theme-chalk 源码。
+
+// icon 字体走 webpack 解析（css-loader 认 ~ 前缀），无需手动拷贝字体文件
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+@import "~element-ui/packages/theme-chalk/src/index";

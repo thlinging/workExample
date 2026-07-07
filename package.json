@@ -1,0 +1,47 @@
+{
+  "name": "resize-project",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "ant-design-vue": "1.7.8",
+    "core-js": "^3.6.5",
+    "element-ui": "^2.15.12",
+    "interactjs": "^1.10.27",
+    "vue": "2.6.2",
+    "vue-router": "^3.5.3",
+    "vue-ueditor-wrap": "^2.5.6"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.19",
+    "@vue/cli-plugin-eslint": "~4.5.19",
+    "@vue/cli-plugin-router": "~4.5.19",
+    "@vue/cli-service": "~4.5.19",
+    "@vue/test-utils": "^1.3.6",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-import": "^1.13.3",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "jsdom": "^24.1.3",
+    "less": "^3.0.4",
+    "less-loader": "^5.0.0",
+    "sass": "^1.32.13",
+    "sass-loader": "^10.5.2",
+    "vite-plugin-vue2": "^2.0.3",
+    "vitest": "^1.6.1",
+    "vue-template-compiler": "2.6.2",
+    "webpack-theme-color-replacer": "^1.3.28"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}

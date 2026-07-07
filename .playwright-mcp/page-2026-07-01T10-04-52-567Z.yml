@@ -1,0 +1,262 @@
+- generic [ref=f4e1]:
+  - generic [ref=f4e3]:
+    - generic [ref=f4e4]:
+      - generic [ref=f4e5]: Resize Project
+      - menu [ref=f4e6]:
+        - menuitem "首页" [ref=f4e7] [cursor=pointer]
+        - menuitem "UEditor" [ref=f4e8] [cursor=pointer]
+        - menuitem "关于" [ref=f4e9] [cursor=pointer]
+    - main [ref=f4e10]:
+      - generic [ref=f4e11]:
+        - generic [ref=f4e12]:
+          - heading "组件演示中心" [level=1] [ref=f4e13]
+          - paragraph [ref=f4e14]: Vue 2.6.2 · ant-design-vue 1.7.8 · interactjs
+        - generic [ref=f4e15]:
+          - generic [ref=f4e19]:
+            - 'generic "icon: appstore" [ref=f4e20]':
+              - img [ref=f4e21]
+            - text: 弹窗演示
+          - generic [ref=f4e24]:
+            - generic [ref=f4e26] [cursor=pointer]:
+              - 'generic "icon: block" [ref=f4e28]':
+                - img [ref=f4e29]
+              - generic [ref=f4e31]:
+                - generic [ref=f4e32]: 弹窗组件
+                - generic [ref=f4e33]: 可拖拽 / 调整尺寸
+            - generic [ref=f4e35] [cursor=pointer]:
+              - 'generic "icon: thunderbolt" [ref=f4e37]':
+                - img [ref=f4e38]
+              - generic [ref=f4e40]:
+                - generic [ref=f4e41]: 指令版弹窗
+                - generic [ref=f4e42]: v-drag / v-resize
+            - generic [ref=f4e44] [cursor=pointer]:
+              - 'generic "icon: layout" [ref=f4e46]':
+                - img [ref=f4e47]
+              - generic [ref=f4e49]:
+                - generic [ref=f4e50]: iframe 弹窗
+                - generic [ref=f4e51]: 内嵌页面演示
+            - generic [ref=f4e53] [cursor=pointer]:
+              - 'generic "icon: table" [ref=f4e55]':
+                - img [ref=f4e56]
+              - generic [ref=f4e58]:
+                - generic [ref=f4e59]: 联动表格弹窗
+                - generic [ref=f4e60]: 左右联动高亮
+            - generic [ref=f4e62] [cursor=pointer]:
+              - 'generic "icon: edit" [ref=f4e64]':
+                - img [ref=f4e65]
+              - generic [ref=f4e67]:
+                - generic [ref=f4e68]: UEditor 弹窗
+                - generic [ref=f4e69]: 富文本 + 拖拽/缩放/全屏
+        - generic [ref=f4e70]:
+          - generic [ref=f4e72]:
+            - generic [ref=f4e74]:
+              - 'generic "icon: calendar" [ref=f4e75]':
+                - img [ref=f4e76]
+              - text: 日期范围选择
+            - generic [ref=f4e78]: 双独立日期 + 粒度切换
+          - generic [ref=f4e79]:
+            - generic [ref=f4e80]:
+              - generic [ref=f4e81]:
+                - combobox [ref=f4e83] [cursor=pointer]:
+                  - generic "按年月日" [ref=f4e85]
+                  - 'generic "icon: down" [ref=f4e87]':
+                    - img [ref=f4e88]
+                - generic [ref=f4e91]:
+                  - textbox "开始日期" [ref=f4e92]
+                  - 'generic "icon: calendar" [ref=f4e94]':
+                    - img [ref=f4e95]
+                - generic [ref=f4e97]: ~
+                - generic [ref=f4e99]:
+                  - textbox "结束日期" [ref=f4e100]
+                  - 'generic "icon: calendar" [ref=f4e102]':
+                    - img [ref=f4e103]
+              - generic [ref=f4e105]:
+                - text: 已选：— ~ —
+                - generic [ref=f4e106]: 按年月日
+            - separator [ref=f4e107]
+            - generic [ref=f4e108]:
+              - generic [ref=f4e109]: 回显示例（点按钮看前面类型框自动切换）：
+              - generic [ref=f4e110]:
+                - button "按 年" [ref=f4e112] [cursor=pointer]:
+                  - generic: 按 年
+                - button "按年月" [ref=f4e114] [cursor=pointer]:
+                  - generic: 按年月
+                - button "按年月日" [ref=f4e116] [cursor=pointer]:
+                  - generic: 按年月日
+                - button "紧凑 YYYYMMDD" [ref=f4e118] [cursor=pointer]:
+                  - generic: 紧凑 YYYYMMDD
+                - button "紧凑 YYYYMM" [ref=f4e120] [cursor=pointer]:
+                  - generic: 紧凑 YYYYMM
+                - button "清 空" [ref=f4e122] [cursor=pointer]:
+                  - generic: 清 空
+        - generic [ref=f4e123]:
+          - generic [ref=f4e127]:
+            - 'generic "icon: profile" [ref=f4e128]':
+              - img [ref=f4e129]
+            - text: 材料份数
+          - generic [ref=f4e132]:
+            - generic [ref=f4e133]:
+              - generic [ref=f4e134]: 录入态
+              - generic [ref=f4e135]:
+                - generic [ref=f4e136]:
+                  - generic [ref=f4e137]: 文档
+                  - spinbutton [ref=f4e140]: "2"
+                  - generic [ref=f4e141]: 份
+                  - 'generic "icon: info-circle" [ref=f4e142]':
+                    - img [ref=f4e143]
+                - generic [ref=f4e146]:
+                  - generic [ref=f4e147]: 图片
+                  - spinbutton [ref=f4e150]: "3"
+                  - generic [ref=f4e151]: 张
+                - generic [ref=f4e152]:
+                  - generic [ref=f4e153]: 视频
+                  - spinbutton [ref=f4e156]: "0"
+                  - generic [ref=f4e157]: 份
+                  - generic [ref=f4e158] [cursor=pointer]: 查看示例
+                - generic [ref=f4e159]:
+                  - generic [ref=f4e160]: 音频
+                  - spinbutton [ref=f4e163]: "1"
+                  - generic [ref=f4e164]: 份
+                - generic [ref=f4e165]:
+                  - generic [ref=f4e166]: 总计
+                  - spinbutton [ref=f4e169]: "6"
+                  - generic [ref=f4e170]: 份
+                  - generic [ref=f4e171] [cursor=pointer]: 清空
+            - separator [ref=f4e172]
+            - generic [ref=f4e173]:
+              - generic [ref=f4e174]: 详情态
+              - generic [ref=f4e175]:
+                - generic [ref=f4e176]:
+                  - generic [ref=f4e177]: 文档
+                  - generic [ref=f4e178]: "2"
+                  - generic [ref=f4e179]: 份
+                - generic [ref=f4e180]:
+                  - generic [ref=f4e181]: 图片
+                  - generic [ref=f4e182]: "3"
+                  - generic [ref=f4e183]: 张
+                - generic [ref=f4e184]:
+                  - generic [ref=f4e185]: 音频
+                  - generic [ref=f4e186]: "1"
+                  - generic [ref=f4e187]: 份
+                - generic [ref=f4e188]:
+                  - generic [ref=f4e189]: 总计
+                  - generic [ref=f4e190]: "6"
+                  - generic [ref=f4e191]: 份
+            - separator [ref=f4e192]
+            - text: 当前 formData：
+            - generic [ref=f4e193]: "{ \"doc\": \"2\", \"image\": \"3\", \"video\": \"\", \"audio\": \"1\" }"
+    - generic [ref=f4e194]: Vue 2.6.2 + ant-design-vue 1.7.8
+  - dialog "UEditor 弹窗（可拖拽 / 缩放 / 全屏）" [ref=f4e693]:
+    - document:
+      - generic:
+        - button "Close" [ref=f4e694] [cursor=pointer]:
+          - 'generic "icon: close" [ref=f4e696]':
+            - img [ref=f4e697]
+        - generic [ref=f4e699]:
+          - generic: UEditor 弹窗（可拖拽 / 缩放 / 全屏）
+        - generic [ref=f4e700]:
+          - generic:
+            - generic:
+              - button "全 屏" [ref=f4e701] [cursor=pointer]:
+                - generic: 全 屏
+              - generic [ref=f4e702]: 标题栏拖动 · 右下角缩放 · 全屏切换（指令均为默认配置）
+            - generic [ref=f4e703]:
+              - generic [ref=f4e705]:
+                - generic "全屏" [ref=f4e709]
+                - generic "源代码" [ref=f4e714]
+                - generic "撤销" [ref=f4e720]
+                - generic "重做" [ref=f4e725]
+                - generic "加粗" [ref=f4e731]
+                - generic "斜体" [ref=f4e736]
+                - generic "下划线" [ref=f4e741]
+                - generic "字符边框" [ref=f4e746]
+                - generic "删除线" [ref=f4e751]
+                - generic "上标" [ref=f4e756]
+                - generic "下标" [ref=f4e761]
+                - generic "清除格式" [ref=f4e766]
+                - generic "格式刷" [ref=f4e771]
+                - generic "自动排版" [ref=f4e774]
+                - generic "引用" [ref=f4e783]
+                - generic "纯文本粘贴模式" [ref=f4e788]
+                - generic "字体颜色" [ref=f4e792]
+                - generic "背景色" [ref=f4e800]
+                - generic "有序列表" [ref=f4e808]
+                - generic "无序列表" [ref=f4e815]
+                - generic "全选" [ref=f4e824]
+                - generic "清空文档" [ref=f4e829]
+                - generic "段前距" [ref=f4e833]
+                - generic "段后距" [ref=f4e840]
+                - generic "行间距" [ref=f4e847]
+                - generic "自定义标题" [ref=f4e855]:
+                  - generic [ref=f4e857]: 自定义标题
+                - generic "段落格式" [ref=f4e861]:
+                  - generic [ref=f4e863]: 段落
+                - generic "字体" [ref=f4e867]:
+                  - generic [ref=f4e869]: arial
+                - generic "字号" [ref=f4e873]:
+                  - generic [ref=f4e875]: 16px
+                - generic "从左向右输入" [ref=f4e882]
+                - generic "从右向左输入" [ref=f4e887]
+                - generic "首行缩进" [ref=f4e892]
+                - generic "居左对齐" [ref=f4e898]
+                - generic "居中对齐" [ref=f4e903]
+                - generic "居右对齐" [ref=f4e908]
+                - generic "两端对齐" [ref=f4e913]
+                - generic "字母大写" [ref=f4e919]
+                - generic "字母小写" [ref=f4e924]
+                - generic "超链接" [ref=f4e930]
+                - generic "取消链接" [ref=f4e935]
+                - generic "锚点" [ref=f4e940]
+                - generic "默认" [ref=f4e946]
+                - generic "左浮动" [ref=f4e951]
+                - generic "右浮动" [ref=f4e956]
+                - generic "居中" [ref=f4e961]
+                - generic "单图上传" [ref=f4e967]
+                - generic "多图上传" [ref=f4e972]
+                - generic "表情" [ref=f4e975]
+                - generic "涂鸦" [ref=f4e983]
+                - generic "视频" [ref=f4e988]
+                - generic "音乐" [ref=f4e993]
+                - generic "附件" [ref=f4e998]
+                - generic "Baidu地图" [ref=f4e1003]
+                - generic "Google地图" [ref=f4e1008]
+                - generic "插入Iframe" [ref=f4e1013]
+                - generic "代码语言" [ref=f4e1016]:
+                  - generic [ref=f4e1018]: 代码语言
+                - generic "百度应用" [ref=f4e1024]
+                - generic "分页" [ref=f4e1029]
+                - generic "模板" [ref=f4e1034]
+                - generic "背景" [ref=f4e1039]
+                - generic "分隔线" [ref=f4e1045]
+                - generic "日期" [ref=f4e1050]
+                - generic "时间" [ref=f4e1055]
+                - generic "特殊字符" [ref=f4e1060]
+                - generic "截图" [ref=f4e1065]
+                - generic "图片转存" [ref=f4e1070]
+                - generic "插入表格" [ref=f4e1074]
+                - generic "删除表格" [ref=f4e1082]
+                - generic "表格前插入行" [ref=f4e1087]
+                - generic "前插入行" [ref=f4e1092]
+                - generic "删除行" [ref=f4e1097]
+                - generic "前插入列" [ref=f4e1102]
+                - generic "删除列" [ref=f4e1107]
+                - generic "合并多个单元格" [ref=f4e1112]
+                - generic "右合并单元格" [ref=f4e1117]
+                - generic "下合并单元格" [ref=f4e1122]
+                - generic "完全拆分单元格" [ref=f4e1127]
+                - generic "拆分成行" [ref=f4e1132]
+                - generic "拆分成列" [ref=f4e1137]
+                - generic "图表" [ref=f4e1142]
+                - generic "打印" [ref=f4e1148]
+                - generic "预览" [ref=f4e1153]
+                - generic "查询替换" [ref=f4e1158]
+                - generic "从草稿箱加载" [ref=f4e1163]
+                - generic "帮助" [ref=f4e1168]
+              - generic:
+                - iframe
+              - table [ref=f4e1170]:
+                - rowgroup [ref=f4e1171]:
+                  - 'row "元素路径: body > p 字数统计" [ref=f4e1172]':
+                    - 'cell "元素路径: body > p" [ref=f4e1173]':
+                      - generic [ref=f4e1174]: "元素路径: body > p"
+                    - cell "字数统计" [ref=f4e1175]

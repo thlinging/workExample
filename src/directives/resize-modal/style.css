@@ -1,0 +1,36 @@
+.v-resize-modal-target {
+  padding-bottom: 0 !important;
+}
+
+.v-resize-modal-target .ant-modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.v-resize-modal-target .ant-modal-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+.v-resize-modal--show-handle .ant-modal-content::after {
+  content: '';
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  width: 14px;
+  height: 14px;
+  cursor: nwse-resize;
+  pointer-events: none;
+  background-image: linear-gradient(
+    135deg,
+    transparent 0 5px,
+    rgba(0, 0, 0, 0.35) 5px 6px,
+    transparent 6px 8px,
+    rgba(0, 0, 0, 0.35) 8px 9px,
+    transparent 9px
+  );
+}

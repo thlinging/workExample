@@ -1,0 +1,53 @@
+[     361ms] [LOG] [HMR] Waiting for update signal from WDS... @ webpack-internal:///./node_modules/webpack/hot/log.js:23
+[     528ms] [INFO] Download the Vue Devtools extension for a better development experience:
+https://github.com/vuejs/vue-devtools @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:8283
+[     568ms] [WARNING] [Vue tip]: Prop "readonly" is passed to component <Anonymous>, but the declared prop name is "readOnly". Note that HTML attributes are case-insensitive and camelCased props need to use their kebab-case equivalents when using in-DOM templates. You should probably use "read-only" instead of "readOnly". @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:624
+[     576ms] [WARNING] [Vue tip]: Prop "readonly" is passed to component <Anonymous>, but the declared prop name is "readOnly". Note that HTML attributes are case-insensitive and camelCased props need to use their kebab-case equivalents when using in-DOM templates. You should probably use "read-only" instead of "readOnly". @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:624
+[    4216ms] [ERROR] [Vue warn]: Unknown custom element: <a-radio-group> - did you register the component correctly? For recursive components, make sure to provide the "name" option.
+
+found in
+
+---> <DirectiveDemoModal> at src/components/DirectiveDemoModal.vue
+       <Home> at src/views/Home.vue
+         <Anonymous>
+           <ALayoutContent>
+             <Anonymous>
+               <ALayout>
+                 <App> at src/App.vue
+                   <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:618
+[    4217ms] [ERROR] [Vue warn]: Unknown custom element: <a-radio-button> - did you register the component correctly? For recursive components, make sure to provide the "name" option.
+
+found in
+
+---> <DirectiveDemoModal> at src/components/DirectiveDemoModal.vue
+       <Home> at src/views/Home.vue
+         <Anonymous>
+           <ALayoutContent>
+             <Anonymous>
+               <ALayout>
+                 <App> at src/App.vue
+                   <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:618
+[    4217ms] [ERROR] [Vue warn]: Unknown custom element: <a-radio-button> - did you register the component correctly? For recursive components, make sure to provide the "name" option.
+
+found in
+
+---> <DirectiveDemoModal> at src/components/DirectiveDemoModal.vue
+       <Home> at src/views/Home.vue
+         <Anonymous>
+           <ALayoutContent>
+             <Anonymous>
+               <ALayout>
+                 <App> at src/App.vue
+                   <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:618
+[    4217ms] [ERROR] [Vue warn]: Unknown custom element: <a-radio-button> - did you register the component correctly? For recursive components, make sure to provide the "name" option.
+
+found in
+
+---> <DirectiveDemoModal> at src/components/DirectiveDemoModal.vue
+       <Home> at src/views/Home.vue
+         <Anonymous>
+           <ALayoutContent>
+             <Anonymous>
+               <ALayout>
+                 <App> at src/App.vue
+                   <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:618

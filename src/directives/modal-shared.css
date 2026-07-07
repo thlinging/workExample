@@ -1,0 +1,28 @@
+/* 拖拽 / 缩放进行中：整页禁用文本选区。
+   避免鼠标移动过快时甩到可选中内容上触发原生选区/原生拖拽，
+   吞掉 pointerup 导致 interactjs 的 end 不触发（松手后弹窗仍跟随/改变大小）。*/
+.v-modal-interacting,
+.v-modal-interacting * {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+/* 注意：这里不再有 `.v-modal-interacting .ant-modal-wrap { overflow: hidden }` 规则——
+   交互期间关 wrap 滚动（防贴边滚动条抖动）已改由 modal-shared.js 的 lockWrapScroll 按
+   wrap 的 computed overflow 逐个判断后用内联样式实现。CSS 无差别命中所有 wrap 会误伤
+   宿主项目里被全局样式改过的 wrap（实测过高度 0、靠 overflow:visible 溢出显示的环境，
+   强制 hidden 会让弹窗在拖拽/缩放期间整个被裁没）。 */
+
+/* 拖拽 / 缩放进行中铺满视口的透明屏蔽层：盖住弹窗内嵌或页面上的所有 iframe，
+   把指针事件挡在父文档里。否则指针移到 iframe 上时事件被 iframe 文档接走，
+   父页面收不到 pointerup，interactjs 的 end 不触发（松手后弹窗仍持续变化）。
+   z-index 顶到最高，确保压在 antd 弹窗（z-index 1000）及 iframe 之上。 */
+.v-modal-interaction-shield {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2147483647;
+  background: transparent;
+}

@@ -1,0 +1,147 @@
+- generic [ref=f12e3]:
+  - generic [ref=f12e4]:
+    - generic [ref=f12e5]: Resize Project
+    - menu [ref=f12e6]:
+      - menuitem "首页" [ref=f12e7] [cursor=pointer]
+      - menuitem "UEditor" [ref=f12e8] [cursor=pointer]
+      - menuitem "关于" [ref=f12e9] [cursor=pointer]
+  - main [ref=f12e10]:
+    - generic [ref=f12e11]:
+      - generic [ref=f12e12]:
+        - heading "组件演示中心" [level=1] [ref=f12e13]
+        - paragraph [ref=f12e14]: Vue 2.6.2 · ant-design-vue 1.7.8 · interactjs
+      - generic [ref=f12e15]:
+        - generic [ref=f12e19]:
+          - 'generic "icon: appstore" [ref=f12e20]':
+            - img [ref=f12e21]
+          - text: 弹窗演示
+        - generic [ref=f12e24]:
+          - generic [ref=f12e26] [cursor=pointer]:
+            - 'generic "icon: block" [ref=f12e28]':
+              - img [ref=f12e29]
+            - generic [ref=f12e31]:
+              - generic [ref=f12e32]: 弹窗组件
+              - generic [ref=f12e33]: 可拖拽 / 调整尺寸
+          - generic [ref=f12e35] [cursor=pointer]:
+            - 'generic "icon: thunderbolt" [ref=f12e37]':
+              - img [ref=f12e38]
+            - generic [ref=f12e40]:
+              - generic [ref=f12e41]: 指令版弹窗
+              - generic [ref=f12e42]: v-drag / v-resize
+          - generic [ref=f12e44] [cursor=pointer]:
+            - 'generic "icon: layout" [ref=f12e46]':
+              - img [ref=f12e47]
+            - generic [ref=f12e49]:
+              - generic [ref=f12e50]: iframe 弹窗
+              - generic [ref=f12e51]: 内嵌页面演示
+          - generic [ref=f12e53] [cursor=pointer]:
+            - 'generic "icon: table" [ref=f12e55]':
+              - img [ref=f12e56]
+            - generic [ref=f12e58]:
+              - generic [ref=f12e59]: 联动表格弹窗
+              - generic [ref=f12e60]: 左右联动高亮
+          - generic [ref=f12e62] [cursor=pointer]:
+            - 'generic "icon: edit" [ref=f12e64]':
+              - img [ref=f12e65]
+            - generic [ref=f12e67]:
+              - generic [ref=f12e68]: UEditor 弹窗
+              - generic [ref=f12e69]: 富文本 + 拖拽/缩放/全屏
+      - generic [ref=f12e70]:
+        - generic [ref=f12e72]:
+          - generic [ref=f12e74]:
+            - 'generic "icon: calendar" [ref=f12e75]':
+              - img [ref=f12e76]
+            - text: 日期范围选择
+          - generic [ref=f12e78]: 双独立日期 + 粒度切换
+        - generic [ref=f12e79]:
+          - generic [ref=f12e80]:
+            - generic [ref=f12e81]:
+              - combobox [ref=f12e83] [cursor=pointer]:
+                - generic "按年月日" [ref=f12e85]
+                - 'generic "icon: down" [ref=f12e87]':
+                  - img [ref=f12e88]
+              - generic [ref=f12e91]:
+                - textbox "开始日期" [ref=f12e92]
+                - 'generic "icon: calendar" [ref=f12e94]':
+                  - img [ref=f12e95]
+              - generic [ref=f12e97]: ~
+              - generic [ref=f12e99]:
+                - textbox "结束日期" [ref=f12e100]
+                - 'generic "icon: calendar" [ref=f12e102]':
+                  - img [ref=f12e103]
+            - generic [ref=f12e105]:
+              - text: 已选：— ~ —
+              - generic [ref=f12e106]: 按年月日
+          - separator [ref=f12e107]
+          - generic [ref=f12e108]:
+            - generic [ref=f12e109]: 回显示例（点按钮看前面类型框自动切换）：
+            - generic [ref=f12e110]:
+              - button "按 年" [ref=f12e112] [cursor=pointer]:
+                - generic: 按 年
+              - button "按年月" [ref=f12e114] [cursor=pointer]:
+                - generic: 按年月
+              - button "按年月日" [ref=f12e116] [cursor=pointer]:
+                - generic: 按年月日
+              - button "紧凑 YYYYMMDD" [ref=f12e118] [cursor=pointer]:
+                - generic: 紧凑 YYYYMMDD
+              - button "紧凑 YYYYMM" [ref=f12e120] [cursor=pointer]:
+                - generic: 紧凑 YYYYMM
+              - button "清 空" [ref=f12e122] [cursor=pointer]:
+                - generic: 清 空
+      - generic [ref=f12e123]:
+        - generic [ref=f12e127]:
+          - 'generic "icon: profile" [ref=f12e128]':
+            - img [ref=f12e129]
+          - text: 材料份数
+        - generic [ref=f12e132]:
+          - generic [ref=f12e133]:
+            - generic [ref=f12e134]: 录入态
+            - generic [ref=f12e135]:
+              - generic [ref=f12e136]:
+                - generic [ref=f12e137]: 文档
+                - spinbutton [ref=f12e140]: "2"
+                - generic [ref=f12e141]: 份
+                - 'generic "icon: info-circle" [ref=f12e142]':
+                  - img [ref=f12e143]
+              - generic [ref=f12e146]:
+                - generic [ref=f12e147]: 图片
+                - spinbutton [ref=f12e150]: "3"
+                - generic [ref=f12e151]: 张
+              - generic [ref=f12e152]:
+                - generic [ref=f12e153]: 视频
+                - spinbutton [ref=f12e156]: "0"
+                - generic [ref=f12e157]: 份
+                - generic [ref=f12e158] [cursor=pointer]: 查看示例
+              - generic [ref=f12e159]:
+                - generic [ref=f12e160]: 音频
+                - spinbutton [ref=f12e163]: "1"
+                - generic [ref=f12e164]: 份
+              - generic [ref=f12e165]:
+                - generic [ref=f12e166]: 总计
+                - spinbutton [ref=f12e169]: "6"
+                - generic [ref=f12e170]: 份
+                - generic [ref=f12e171] [cursor=pointer]: 清空
+          - separator [ref=f12e172]
+          - generic [ref=f12e173]:
+            - generic [ref=f12e174]: 详情态
+            - generic [ref=f12e175]:
+              - generic [ref=f12e176]:
+                - generic [ref=f12e177]: 文档
+                - generic [ref=f12e178]: "2"
+                - generic [ref=f12e179]: 份
+              - generic [ref=f12e180]:
+                - generic [ref=f12e181]: 图片
+                - generic [ref=f12e182]: "3"
+                - generic [ref=f12e183]: 张
+              - generic [ref=f12e184]:
+                - generic [ref=f12e185]: 音频
+                - generic [ref=f12e186]: "1"
+                - generic [ref=f12e187]: 份
+              - generic [ref=f12e188]:
+                - generic [ref=f12e189]: 总计
+                - generic [ref=f12e190]: "6"
+                - generic [ref=f12e191]: 份
+          - separator [ref=f12e192]
+          - text: 当前 formData：
+          - generic [ref=f12e193]: "{ \"doc\": \"2\", \"image\": \"3\", \"video\": \"\", \"audio\": \"1\" }"
+  - generic [ref=f12e194]: Vue 2.6.2 + ant-design-vue 1.7.8
