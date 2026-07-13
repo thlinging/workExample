@@ -3,6 +3,10 @@ import App from './App.vue'
 import router from './router'
 import './plugins/ant-design-vue'
 import './plugins/element-ui'
+// Mintlify 设计系统：令牌层（字体 + CSS 变量）在前，组件覆盖层在后。
+// 放在组件库样式之后引入，确保覆盖层能压过 antd/element 的默认样式。
+import './theme/design-tokens.css'
+import './theme/mintlify.css'
 import ResizableModal from './plugins/resizable-modal'
 import installModalDirectives from './directives'
 import VueUeditorWrap from 'vue-ueditor-wrap'

@@ -20,7 +20,10 @@ import {
   CheckboxGroup,
   Pagination,
   Table,
-  TableColumn
+  TableColumn,
+  Slider,
+  Link,
+  Progress
 } from 'element-ui'
 
 const components = [
@@ -37,7 +40,10 @@ const components = [
   CheckboxGroup,
   Pagination,
   Table,
-  TableColumn
+  TableColumn,
+  Slider,
+  Link,
+  Progress
 ]
 
 components.forEach(component => {

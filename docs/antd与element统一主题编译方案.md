@@ -2,7 +2,7 @@
 
 > 针对本项目现状（vue-cli 4 + less-loader modifyVars + src/theme/presets.js 唯一主题源，
 > VUE_APP_THEME 编译期选方案）设计。**2026-07-06 已实施并验证**：
-> default（丹红 #f5222d）与 ocean（拂晓蓝 #1890ff）两方案构建，antd 与 element 主色均同步切换，
+> default（丹红 #f12b25）与 deepRed（深红 #ac2417）两方案构建，antd 与 element 主色均同步切换，
 > element 默认蓝 #409eff 零残留，93 个单测全部通过。
 >
 > 实施要点与方案的差异：

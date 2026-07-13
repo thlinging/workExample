@@ -27,6 +27,11 @@ import {
   Avatar,
   Badge,
   Alert,
+  Switch,
+  Checkbox,
+  Slider,
+  Progress,
+  Steps,
   message,
   notification
 } from 'ant-design-vue'
@@ -58,7 +63,12 @@ const components = [
   Divider,
   Avatar,
   Badge,
-  Alert
+  Alert,
+  Switch,
+  Checkbox,
+  Slider,
+  Progress,
+  Steps
 ]
 
 components.forEach(component => {

@@ -1,9 +1,16 @@
 <template>
   <div class="home">
-    <!-- 顶部标题区 -->
+    <!-- 顶部英雄区：Mintlify 大气渐变横幅 -->
     <section class="hero">
-      <h1 class="hero-title">组件演示中心</h1>
-      <p class="hero-subtitle">Vue 2.6.2 · ant-design-vue 1.7.8 · interactjs</p>
+      <div class="hero-inner">
+        <span class="hero-eyebrow m-micro-up">组件演示中心</span>
+        <h1 class="hero-title">为交互而生的<br />组件与指令集</h1>
+        <p class="hero-subtitle">可拖拽/缩放弹窗、联动表格、双日期区间、富文本编辑 —— 一处演示，随取随用。</p>
+        <div class="hero-actions">
+          <a-button class="m-btn-accent" size="large" @click="modalVisible = true">开始体验</a-button>
+          <a-button size="large" @click="$router.push('/theme')">查看主题系统</a-button>
+        </div>
+      </div>
     </section>
 
     <!-- 弹窗演示 -->
@@ -235,61 +242,85 @@ export default {
 
 <style scoped>
 .home {
-  max-width: 1080px;
-  margin: 0 auto;
+  width: 100%;
 }
 
-/* 顶部标题 */
+/* 英雄区：大气渐变横幅（sky-from → sky-to），墨色文字 */
 .hero {
-  padding: 8px 4px 24px;
+  margin: -8px 0 32px;
+  padding: 72px 48px;
+  border-radius: var(--m-r-xxl);
+  background: linear-gradient(160deg, var(--m-hero-sky-from) 0%, var(--m-hero-sky-to) 100%);
+  border: 1px solid var(--m-hairline-soft);
+  overflow: hidden;
+}
+
+.hero-inner {
+  max-width: 640px;
+}
+
+.hero-eyebrow {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: rgba(10, 10, 10, 0.55);
 }
 
 .hero-title {
   margin: 0;
-  font-size: 28px;
+  font-size: 48px;
+  line-height: 1.1;
+  letter-spacing: -1px;
   font-weight: 600;
-  color: rgba(0, 0, 0, 0.85);
+  color: var(--m-ink);
 }
 
 .hero-subtitle {
-  margin: 6px 0 0;
-  color: rgba(0, 0, 0, 0.45);
-  font-size: 14px;
+  margin: 20px 0 0;
+  max-width: 520px;
+  color: var(--m-slate);
+  font-size: 18px;
+  line-height: 1.5;
 }
 
-/* 通用面板 */
+.hero-actions {
+  margin-top: 32px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* 通用面板：扁平卡片由全局 .ant-card 覆盖层接管，这里只管间距 */
 .panel {
   margin-bottom: 20px;
-  border-radius: 8px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
 
 .panel-title {
   font-weight: 600;
+  color: var(--m-ink);
 }
 
 .panel-extra {
-  color: rgba(0, 0, 0, 0.45);
+  color: var(--m-steel);
   font-size: 13px;
 }
 
-/* 弹窗卡片 */
+/* 演示卡片：Mintlify card-base + 薄荷绿点缀 */
 .demo-card {
   display: flex;
   align-items: center;
   gap: 14px;
   height: 100%;
   padding: 16px;
-  border: 1px solid #f0f0f0;
-  border-radius: 8px;
+  border: 1px solid var(--m-hairline);
+  border-radius: var(--m-r-lg);
   cursor: pointer;
-  transition: all 0.2s ease;
-  background: #fff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  background: var(--m-canvas);
 }
 
 .demo-card:hover {
-  border-color: #1890ff;
-  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.15);
+  border-color: var(--m-mint);
+  box-shadow: var(--m-shadow-2);
   transform: translateY(-2px);
 }
 
@@ -300,10 +331,10 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
+  border-radius: var(--m-r-md);
   font-size: 20px;
-  color: #1890ff;
-  background: #e6f7ff;
+  color: var(--m-mint-deep);
+  background: rgba(0, 212, 164, 0.1);
 }
 
 .demo-meta {
@@ -313,13 +344,13 @@ export default {
 .demo-name {
   font-size: 15px;
   font-weight: 600;
-  color: rgba(0, 0, 0, 0.85);
+  color: var(--m-ink);
 }
 
 .demo-desc {
   margin-top: 2px;
   font-size: 12px;
-  color: rgba(0, 0, 0, 0.45);
+  color: var(--m-steel);
 }
 
 /* 日期区 */
@@ -335,15 +366,15 @@ export default {
 }
 
 .date-result {
-  color: rgba(0, 0, 0, 0.65);
+  color: var(--m-slate);
 }
 
 .date-result b {
-  color: rgba(0, 0, 0, 0.85);
+  color: var(--m-ink);
 }
 
 .date-hint {
-  color: rgba(0, 0, 0, 0.45);
+  color: var(--m-steel);
 }
 
 /* 材料份数区 */
@@ -355,7 +386,7 @@ export default {
 
 .material-tip {
   margin-left: 4px;
-  color: rgba(0, 0, 0, 0.35);
+  color: var(--m-stone);
   cursor: help;
 }
 
@@ -364,12 +395,23 @@ export default {
   font-size: 12px;
 }
 
+/* JSON 预览：深色文档风代码块 */
 .material-json {
   margin: 8px 0 0;
-  padding: 10px 12px;
-  border-radius: 6px;
-  background: #f5f5f5;
-  color: rgba(0, 0, 0, 0.65);
+  padding: 12px 14px;
+  border-radius: var(--m-r-md);
+  background: var(--m-surface-code);
+  color: var(--m-on-dark);
+  font-family: var(--m-font-mono);
   font-size: 13px;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 48px 24px;
+  }
+  .hero-title {
+    font-size: 36px;
+  }
 }
 </style>

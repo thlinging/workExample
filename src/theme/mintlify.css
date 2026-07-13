@@ -1,0 +1,378 @@
+/*
+ * Mintlify 组件覆盖层 —— 把 design-tokens.css 的令牌应用到全局基础样式
+ * 与 antd v1 / element-ui 组件上，落地 DESIGN.md 的视觉语言：
+ *   · Inter 正文 + Geist Mono 代码；扁平、密集、克制的圆角尺度
+ *   · 黑色药丸主按钮统治；薄荷绿仅作强调/激活点缀（.m-btn-accent）
+ *   · 输入框聚焦用薄荷绿作激活信号；卡片扁平 + 发丝线边框
+ *
+ * 作用域约定：凡是可能与「运行时换肤引擎（webpack-theme-color-replacer）
+ * 追加的纯 class 选择器」冲突的**颜色**规则，一律用 `#app` 前缀抬高优先级，
+ * 稳压过引擎（引擎改色不影响主按钮的 Mintlify 黑，二者互不打架）。
+ * 形状/排版/间距类规则不涉及冲突，用常规选择器即可。
+ */
+
+/* ══ 基础排版 ══════════════════════════════════════════════════ */
+html,
+body {
+  background: var(--m-surface-soft);
+}
+
+#app {
+  font-family: var(--m-font-sans);
+  color: var(--m-charcoal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'cv11', 'ss01';
+  letter-spacing: 0;
+}
+
+#app h1,
+#app h2,
+#app h3,
+#app h4,
+#app h5,
+#app h6 {
+  font-family: var(--m-font-sans);
+  color: var(--m-ink);
+  font-weight: 600;
+}
+#app h1 { letter-spacing: var(--m-ls-h1); }
+#app h2 { letter-spacing: var(--m-ls-h2); }
+
+#app a {
+  color: var(--m-charcoal);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+#app a:hover {
+  color: var(--m-mint-deep);
+}
+
+#app code,
+#app kbd,
+#app pre,
+#app samp {
+  font-family: var(--m-font-mono);
+}
+
+/* 代码块 / 预格式：深色文档风 */
+#app pre {
+  background: var(--m-surface-code);
+  color: var(--m-on-dark);
+  border-radius: var(--m-r-md);
+  font-size: var(--m-fs-caption);
+  line-height: 1.5;
+}
+
+/* ══ 排版工具类（供页面英雄区/标题使用）══════════════════════ */
+.m-hero-display {
+  font-size: var(--m-fs-hero);
+  line-height: var(--m-lh-hero);
+  letter-spacing: var(--m-ls-hero);
+  font-weight: 600;
+  color: var(--m-ink);
+}
+.m-display { font-size: var(--m-fs-display); line-height: var(--m-lh-display); letter-spacing: var(--m-ls-display); font-weight: 600; }
+.m-h1 { font-size: var(--m-fs-h1); line-height: var(--m-lh-h1); letter-spacing: var(--m-ls-h1); font-weight: 600; }
+.m-h2 { font-size: var(--m-fs-h2); line-height: var(--m-lh-h2); letter-spacing: var(--m-ls-h2); font-weight: 600; }
+.m-h3 { font-size: var(--m-fs-h3); line-height: var(--m-lh-h3); font-weight: 600; }
+.m-subtitle { font-size: var(--m-fs-subtitle); line-height: 1.5; color: var(--m-steel); font-weight: 400; }
+.m-caption { font-size: var(--m-fs-caption); line-height: 1.4; color: var(--m-stone); }
+.m-micro-up {
+  font-size: var(--m-fs-micro-up);
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--m-steel);
+}
+.m-mono { font-family: var(--m-font-mono); }
+.m-text-mint { color: var(--m-mint-deep); }
+.m-text-muted { color: var(--m-steel); }
+
+/* ══ antd 按钮：药丸化 ═════════════════════════════════════════ */
+/* 形状/排版：所有按钮（含幽灵按钮）统一 */
+#app .ant-btn {
+  font-family: var(--m-font-sans);
+  font-weight: 500;
+  font-size: var(--m-fs-sm);
+  height: 36px;
+  padding: 0 18px;
+  border-radius: var(--m-r-full);
+  box-shadow: none;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+/* 默认表面：仅非幽灵按钮。幽灵按钮保留 antd 原生「透明底 + 主色描边/文字」，
+   故这里用 :not(.ant-btn-background-ghost) 排除，避免把幽灵按钮刷成实心。 */
+#app .ant-btn:not(.ant-btn-background-ghost) {
+  border: 1px solid var(--m-hairline);
+  color: var(--m-ink);
+  background: var(--m-canvas);
+}
+#app .ant-btn > .anticon + span,
+#app .ant-btn > span + .anticon {
+  margin-left: 6px;
+}
+#app .ant-btn-sm {
+  height: 28px;
+  padding: 0 12px;
+  font-size: var(--m-fs-caption);
+}
+#app .ant-btn-lg {
+  height: 44px;
+  padding: 0 24px;
+  font-size: var(--m-fs-body);
+}
+#app .ant-btn:not(.ant-btn-background-ghost):hover,
+#app .ant-btn:not(.ant-btn-background-ghost):focus {
+  color: var(--m-ink);
+  border-color: var(--m-stone);
+  background: var(--m-canvas);
+}
+
+/* 幽灵按钮：透明底，描边/文字跟随主色（默认薄荷；/theme 演示时跟随）——保留 antd 原生表现 */
+#app .ant-btn-background-ghost {
+  background: transparent;
+}
+
+/* 主按钮：黑药丸（统治级 CTA）。#app 作用域稳压过换肤引擎的追加规则。
+   排除幽灵变体（type="primary" ghost）——否则会把透明幽灵刷成实心黑。 */
+#app .ant-btn-primary:not(.ant-btn-background-ghost) {
+  background: var(--m-primary);
+  border-color: var(--m-primary);
+  color: var(--m-on-primary);
+}
+#app .ant-btn-primary:not(.ant-btn-background-ghost):hover,
+#app .ant-btn-primary:not(.ant-btn-background-ghost):focus {
+  background: var(--m-charcoal);
+  border-color: var(--m-charcoal);
+  color: var(--m-on-primary);
+}
+#app .ant-btn-primary[disabled],
+#app .ant-btn-primary[disabled]:hover {
+  background: var(--m-hairline);
+  border-color: var(--m-hairline);
+  color: var(--m-muted);
+}
+
+/* 链接按钮：墨色文字，无边框 */
+#app .ant-btn-link {
+  height: auto;
+  padding: 0 4px;
+  border-color: transparent;
+  background: transparent;
+  color: var(--m-ink);
+}
+#app .ant-btn-link:hover,
+#app .ant-btn-link:focus {
+  color: var(--m-mint-deep);
+  border-color: transparent;
+  background: transparent;
+}
+
+/* 危险按钮：错误红药丸（同样排除幽灵变体） */
+#app .ant-btn-danger:not(.ant-btn-background-ghost) {
+  background: var(--m-error);
+  border-color: var(--m-error);
+  color: var(--m-on-dark);
+}
+#app .ant-btn-danger:not(.ant-btn-background-ghost):hover,
+#app .ant-btn-danger:not(.ant-btn-background-ghost):focus {
+  background: #c04a4a;
+  border-color: #c04a4a;
+  color: var(--m-on-dark);
+}
+
+/* 强调按钮工具类：薄荷绿药丸（品牌强调 CTA，如「开始使用」）*/
+#app .ant-btn.m-btn-accent,
+#app .m-btn-accent {
+  background: var(--m-mint);
+  border-color: var(--m-mint);
+  color: var(--m-primary);
+}
+#app .ant-btn.m-btn-accent:hover,
+#app .ant-btn.m-btn-accent:focus {
+  background: var(--m-mint-deep);
+  border-color: var(--m-mint-deep);
+  color: var(--m-primary);
+}
+
+/* ══ antd 输入 / 选择：聚焦用薄荷绿 ═══════════════════════════ */
+#app .ant-input,
+#app .ant-input-number,
+#app .ant-select-selection,
+#app .ant-time-picker-input,
+#app .ant-calendar-picker-input {
+  border-radius: var(--m-r-md);
+  border-color: var(--m-hairline);
+  font-family: var(--m-font-sans);
+  color: var(--m-ink);
+  box-shadow: none;
+}
+#app .ant-input:hover,
+#app .ant-input-number:hover,
+#app .ant-select-selection:hover,
+#app .ant-calendar-picker-input:hover {
+  border-color: var(--m-mint);
+}
+#app .ant-input:focus,
+#app .ant-input-number-focused,
+#app .ant-select-open .ant-select-selection,
+#app .ant-select-focused .ant-select-selection,
+#app .ant-calendar-picker:focus .ant-calendar-picker-input {
+  border-color: var(--m-mint);
+  box-shadow: 0 0 0 2px rgba(0, 212, 164, 0.15);
+}
+
+/* ══ antd 卡片：扁平 + 发丝线 ═════════════════════════════════ */
+#app .ant-card {
+  border-radius: var(--m-r-lg);
+  border: 1px solid var(--m-hairline);
+  box-shadow: none;
+  background: var(--m-canvas);
+}
+#app .ant-card-bordered { border: 1px solid var(--m-hairline); }
+#app .ant-card-head {
+  border-bottom: 1px solid var(--m-hairline);
+  color: var(--m-ink);
+  font-weight: 600;
+  min-height: 52px;
+}
+#app .ant-card-head-title { font-weight: 600; }
+
+/* ══ antd 标签：药丸徽标风 ════════════════════════════════════ */
+#app .ant-tag {
+  border-radius: var(--m-r-full);
+  border: none;
+  font-size: var(--m-fs-caption);
+  font-weight: 500;
+  padding: 1px 10px;
+  line-height: 20px;
+}
+
+/* ══ antd 表格：密集文档风 ════════════════════════════════════ */
+#app .ant-table {
+  font-family: var(--m-font-sans);
+  font-size: var(--m-fs-sm);
+  color: var(--m-charcoal);
+}
+#app .ant-table-thead > tr > th {
+  background: var(--m-surface);
+  color: var(--m-steel);
+  font-weight: 500;
+  border-bottom: 1px solid var(--m-hairline);
+}
+#app .ant-table-tbody > tr > td {
+  border-bottom: 1px solid var(--m-hairline-soft);
+}
+#app .ant-table-bordered,
+#app .ant-table-bordered .ant-table-content {
+  border-radius: var(--m-r-md);
+}
+#app .ant-table-tbody > tr:hover:not(.ant-table-expanded-row) > td {
+  background: var(--m-surface-soft);
+}
+
+/* ══ antd 分隔线 / Tabs / 分页 ════════════════════════════════ */
+#app .ant-divider { border-top-color: var(--m-hairline); }
+#app .ant-divider-horizontal { background: var(--m-hairline); }
+
+#app .ant-tabs-bar { border-bottom: 1px solid var(--m-hairline); }
+#app .ant-tabs-nav .ant-tabs-tab {
+  color: var(--m-steel);
+  font-weight: 500;
+  font-size: var(--m-fs-sm);
+}
+/* 激活态文字/下划线不钉色，跟随 antd 主色（默认=薄荷，/theme 换色时实时跟随）。
+   标签页仅出现在 /theme 演示页，钉成墨色会破坏「跟随主色」的演示，故不覆盖。 */
+
+#app .ant-pagination-item,
+#app .ant-pagination-prev .ant-pagination-item-link,
+#app .ant-pagination-next .ant-pagination-item-link {
+  border-radius: var(--m-r-md);
+  border-color: var(--m-hairline);
+}
+/* 分页当前页同理不钉色，跟随主色（默认薄荷 / 演示跟随）。 */
+
+/* ══ antd 弹层 / Modal / 消息 / 提示 ══════════════════════════ */
+#app .ant-modal-content,
+.ant-modal-content {
+  border-radius: var(--m-r-lg);
+  overflow: hidden;
+}
+.ant-modal-header { border-bottom: 1px solid var(--m-hairline); }
+.ant-modal-footer { border-top: 1px solid var(--m-hairline); }
+.ant-modal-title { font-weight: 600; color: var(--m-ink); }
+
+.ant-message-notice-content,
+.ant-notification-notice {
+  border-radius: var(--m-r-md);
+  box-shadow: var(--m-shadow-2);
+}
+.ant-tooltip-inner {
+  border-radius: var(--m-r-md);
+  background: var(--m-primary);
+  font-size: var(--m-fs-caption);
+}
+.ant-tooltip-arrow::before { background: var(--m-primary); }
+
+.ant-alert {
+  border-radius: var(--m-r-md);
+  border-color: var(--m-hairline);
+}
+
+/* 下拉/选择弹层圆角 */
+.ant-select-dropdown,
+.ant-dropdown-menu,
+.ant-calendar-picker-container .ant-calendar {
+  border-radius: var(--m-r-md);
+}
+
+/* ══ element-ui：与 antd 对齐 ═════════════════════════════════ */
+#app .el-button {
+  font-family: var(--m-font-sans);
+  font-weight: 500;
+  border-radius: var(--m-r-full);
+  border-color: var(--m-hairline);
+}
+#app .el-button--primary {
+  background: var(--m-primary);
+  border-color: var(--m-primary);
+  color: var(--m-on-primary);
+}
+#app .el-button--primary:hover,
+#app .el-button--primary:focus {
+  background: var(--m-charcoal);
+  border-color: var(--m-charcoal);
+  color: var(--m-on-primary);
+}
+/* 文字按钮：无边框、透明底，颜色跟随主色（默认薄荷）。generic .el-button 的
+   发丝线边框会给本该无边框的文字按钮加上可见边框，这里恢复原生表现。 */
+#app .el-button--text {
+  border-color: transparent;
+  background: transparent;
+}
+#app .el-button--text:hover,
+#app .el-button--text:focus {
+  border-color: transparent;
+  background: transparent;
+}
+#app .el-input__inner,
+#app .el-textarea__inner {
+  border-radius: var(--m-r-md);
+  border-color: var(--m-hairline);
+  font-family: var(--m-font-sans);
+}
+#app .el-input__inner:focus,
+#app .el-textarea__inner:focus {
+  border-color: var(--m-mint);
+}
+#app .el-tag {
+  border-radius: var(--m-r-full);
+  font-weight: 500;
+}
+#app .el-card {
+  border-radius: var(--m-r-lg);
+  border: 1px solid var(--m-hairline);
+  box-shadow: none;
+}

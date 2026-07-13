@@ -1,13 +1,11 @@
-// antd 运行时换肤（webpack-theme-color-replacer）已暂时屏蔽。
-// 恢复方法：放开下面两行 require 和 configureWebpack.plugins 里的插件注释，
-// 同时放开 src/theme/ThemeManager.js 里的 changeColor 调用。详见 docs/主题换肤方案说明.md。
-// const ThemeColorReplacer = require('webpack-theme-color-replacer')
-// const { getAntdSerials } = require('./src/theme/colorSeries')
-
-// 编译期主题方案：由 .env 的 VUE_APP_THEME 选定（default / ocean / forest），
+// 编译期主题方案：由 .env 的 VUE_APP_THEME 选定（default / deepRed），
 // 全部变量集中在 src/theme/presets.js 维护，这里只负责取用。
 const { getPreset } = require('./src/theme/presets')
 const theme = getPreset(process.env.VUE_APP_THEME)
+
+// antd + element 运行时换肤引擎（webpack-theme-color-replacer）。配置与踩坑注释都在
+// src/theme/themeColorReplacer.js，这里只按当前方案主色实例化。
+const createThemeColorReplacer = require('./src/theme/themeColorReplacer')
 
 module.exports = {
   publicPath: './',
@@ -42,18 +40,7 @@ module.exports = {
   },
   configureWebpack: {
     plugins: [
-      // antd 运行时换肤引擎（暂时屏蔽，恢复见文件顶部说明）
-      // new ThemeColorReplacer({
-      //   // 固定名（不用 [contenthash]）：injectCss 下该 css 已注入带 hash 的 js，
-      //   // 无需再对文件名做 hash；同时规避插件内部 md4 在 Node 17+/OpenSSL3 下的报错。
-      //   fileName: 'static/css/theme-colors.css',
-      //   // 与运行时 ThemeManager 用同一个 getAntdSerials，保证顺序一一对应；
-      //   // 主色直接取当前方案，天然与 modifyVars 对齐
-      //   matchColors: getAntdSerials(theme.modifyVars['@primary-color']),
-      //   // 把抽取出的主题色样式直接注入 js，运行时无需额外下载 css 文件（省一次请求、切换更即时）
-      //   injectCss: true,
-      //   isJsUgly: process.env.NODE_ENV !== 'development'
-      // })
+      createThemeColorReplacer(theme.modifyVars['@primary-color'])
     ]
   }
 }

@@ -74,18 +74,14 @@ export default {
 
 <style scoped>
 .ueditor-demo {
-  max-width: 1080px;
-  margin: 0 auto;
-}
-.panel {
-  border-radius: 8px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  width: 100%;
 }
 .panel-title {
   font-weight: 600;
+  color: var(--m-ink);
 }
 .panel-extra {
-  color: rgba(0, 0, 0, 0.45);
+  color: var(--m-steel);
   font-size: 13px;
 }
 .tip {
@@ -101,15 +97,17 @@ export default {
   margin-top: 16px;
 }
 .preview-label {
-  color: rgba(0, 0, 0, 0.45);
+  color: var(--m-steel);
   margin-bottom: 6px;
 }
+/* 深色文档风代码块 */
 .preview-code {
   margin: 0;
-  padding: 10px 12px;
-  border-radius: 6px;
-  background: #f5f5f5;
-  color: rgba(0, 0, 0, 0.65);
+  padding: 12px 14px;
+  border-radius: var(--m-r-md);
+  background: var(--m-surface-code);
+  color: var(--m-on-dark);
+  font-family: var(--m-font-mono);
   font-size: 13px;
   white-space: pre-wrap;
   word-break: break-all;
