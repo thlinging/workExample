@@ -207,8 +207,17 @@ const FORMATS = {
 // 对外 emit 值 + 回显的「规范格式」：始终带横线，与显示首项保持一致
 const VALUE_FORMATS = { year: 'YYYY', month: 'YYYY-MM', date: 'YYYY-MM-DD' }
 const UNITS = { year: 'year', month: 'month', date: 'day' }
-// 回显反推用：严格匹配（strict 模式逐个试），同时兼容带横线与紧凑 YYYYMMDD 写法
-const PARSE_FORMATS = ['YYYY-MM-DD', 'YYYY-MM', 'YYYY', 'YYYYMMDD', 'YYYYMM']
+// 回显白名单：格式 -> 粒度。只认这几种写法，兼容带横线与紧凑写法。
+// moment 严格模式（第三参 true）要求整串被吃完，所以 '202406' 不会被 'YYYY' 匹配上。
+const PARSE_RULES = [
+  { format: 'YYYY', mode: 'year' },
+  { format: 'YYYY-MM', mode: 'month' },
+  { format: 'YYYYMM', mode: 'month' },
+  { format: 'YYYY-MM-DD', mode: 'date' },
+  { format: 'YYYYMMDD', mode: 'date' }
+]
+// 开发期脏值告警去重（见 parseValue）
+const WARNED = new Set()
 
 export default {
   name: 'DualDateRangePicker',
@@ -218,12 +227,14 @@ export default {
     // 两端各自的双向绑定值（格式化字符串，类型由格式承载以支持自动回显）
     // 用法：:start-value.sync="x" :end-value.sync="y"
     //   "2024" -> 按年，"2024-06" -> 按年月，"2024-06-15" -> 按年月日
+    // 允许 Number（后端偶尔给 2024 / 20240615），解析前统一转串；
+    // 不在白名单内的写法一律不回显，见 PARSE_RULES / parseValue
     startValue: {
-      type: String,
+      type: [String, Number],
       default: null
     },
     endValue: {
-      type: String,
+      type: [String, Number],
       default: null
     },
     // 初始粒度：year | month | date（无回显值时使用）
@@ -247,6 +258,13 @@ export default {
       default: true
     },
     showCalendarIcon: {
+      type: Boolean,
+      default: true
+    },
+    // 收到不符合回显格式的脏值时（如后端老数据 "2026年2月"），
+    // 除了不回显，还把它 .sync 回写成 null —— 否则父级模型里那个脏值
+    // 会被原样提交给后端。需要保留原值另行处理时置 false。
+    clearInvalid: {
       type: Boolean,
       default: true
     }
@@ -292,23 +310,63 @@ export default {
     }
   },
   watch: {
+    // immediate：初始回显的脏值也要在挂载时就清掉，不能等到用户去动它
+    startValue: {
+      immediate: true,
+      handler(val) {
+        this.dropInvalid(val, 'startValue')
+        this.syncModeFromValue()
+      }
+    },
     // 外部异步回填（如详情接口后到）时，按新值的格式自动纠正粒度
-    startValue: 'syncModeFromValue',
-    endValue: 'syncModeFromValue'
+    endValue: {
+      immediate: true,
+      handler(val) {
+        this.dropInvalid(val, 'endValue')
+        this.syncModeFromValue()
+      }
+    }
   },
   methods: {
-    // 按字符串格式反推粒度：纯函数，data() 阶段即可调用
-    // 同时兼容带横线与紧凑写法：2024→年；2024-06/202406→年月；2024-06-15/20240615→年月日
-    detectMode(str) {
+    // 回显总入口：严格解析成 { moment, mode }，不在白名单里的一律返回 null（不回显）。
+    // 纯函数（只依赖入参），methods 早于 data 初始化，所以 data() 阶段即可调用。
+    // 认：2024→年；2024-06/202406→年月；2024-06-15/20240615→年月日
+    // 不认：空串、非字符串、2024/06/15、2024-6-5、2024-13、20240631（不存在的日期）、任何脏数据
+    parseValue(raw) {
+      if (raw === null || raw === undefined) return null
+      // 后端偶尔给数字（如 2024 / 20240615），转成串再走同一套白名单
+      const str = String(raw).trim()
       if (!str) return null
-      if (/^\d{4}$/.test(str)) return 'year'
-      if (/^\d{4}-?\d{2}$/.test(str)) return 'month'
-      return 'date'
+      for (let i = 0; i < PARSE_RULES.length; i++) {
+        const rule = PARSE_RULES[i]
+        const m = moment(str, rule.format, true)
+        if (m.isValid()) return { moment: m, mode: rule.mode }
+      }
+      // computed 会随 props 反复重算，同一个脏值只提示一次
+      if (process.env.NODE_ENV !== 'production' && !WARNED.has(str)) {
+        WARNED.add(str)
+        console.warn(`[DualDateRangePicker] 值 "${str}" 不符合回显格式，已忽略`)
+      }
+      return null
+    },
+    // 按字符串格式反推粒度；解析不出来则返回 null，不去污染当前粒度
+    detectMode(str) {
+      const parsed = this.parseValue(str)
+      return parsed ? parsed.mode : null
     },
     toMoment(str) {
-      if (!str) return null
-      const m = moment(str, PARSE_FORMATS, true)
-      return m.isValid() ? m : null
+      const parsed = this.parseValue(str)
+      return parsed ? parsed.moment : null
+    },
+    // 脏值反向清空：只针对「非空但解析不出来」的值。
+    // 空值本来就没东西可清，直接返回，避免 null -> emit null 的死循环。
+    dropInvalid(raw, prop) {
+      if (!this.clearInvalid) return
+      if (raw === null || raw === undefined || String(raw).trim() === '') return
+      if (this.parseValue(raw)) return
+      // 不发 change：这是数据清洗，不是用户操作，不该触发父级的查询/提交
+      this.$emit('invalid', { prop, value: raw })
+      this.$emit(`update:${prop}`, null)
     },
     syncModeFromValue() {
       const m = this.detectMode(this.startValue) || this.detectMode(this.endValue)
@@ -366,12 +424,19 @@ export default {
     outerText(v) {
       return v ? v.format(VALUE_FORMATS[this.mode]) : ''
     },
-    // change 事件载荷：格式化字符串 + moment 原值（start/end 已是字符串）
+    // 任意合法写法 -> 该粒度的规范串（202406 -> 2024-06）；非法值 -> null
+    normalize(raw) {
+      const parsed = this.parseValue(raw)
+      return parsed ? parsed.moment.format(VALUE_FORMATS[parsed.mode]) : null
+    },
+    // change 事件载荷：规范字符串 + moment 原值。
+    // 未变动的那一端是直接拿的 prop 原值，这里同样过一遍过滤/规范化，
+    // 保证 start 与 startMoment 永远同进同退（不会出现有串但 moment 为 null）
     buildPayload(start, end) {
       return {
         mode: this.mode,
-        start: start || null,
-        end: end || null,
+        start: this.normalize(start),
+        end: this.normalize(end),
         startMoment: this.toMoment(start),
         endMoment: this.toMoment(end)
       }
