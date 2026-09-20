@@ -63,6 +63,8 @@ export default {
     return {
       navItems: [
         { path: '/', label: '首页' },
+        { path: '/document/hq', label: '意见稿（总公司）' },
+        { path: '/document/unit', label: '意见稿（子公司）' },
         { path: '/easy-tree', label: '虚拟滚动树' },
         { path: '/theme', label: '主题演示' },
         { path: '/about', label: '关于' }

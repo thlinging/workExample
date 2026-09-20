@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>子公司-意见稿及回复管理</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {colors:{primary:'#165DFF'}}
+      }
+    }
+  </script>
+  <style>
+    html,body{height:100%;margin:0;padding:0;}
+    .table-wrap{overflow:auto;}
+  </style>
+</head>
+<body class="bg-gray-50 h-full flex flex-col">
+<header class="h-14 bg-primary text-white flex items-center px-6 shadow shrink-0">
+  <h1 class="text-lg font-medium">意见稿征求管理平台｜华东子公司</h1>
+  <div class="ml-auto text-sm"><i class="fa fa-user"></i> 华东子公司操作员</div>
+</header>
+
+<main class="flex-1 p-5 overflow-auto flex flex-col gap-5">
+  <!--上表格：总公司下发意见稿 -->
+  <div class="bg-white rounded shadow p-4">
+    <div class="flex justify-between items-center mb-3">
+      <h3 class="font-bold">接收材料</h3>
+      <div class="flex gap-2 text-sm">
+        <input placeholder="文号" class="border rounded px-2 py-1">
+        <input placeholder="文件名称" class="border rounded px-2 py-1">
+        <input type="date" class="border rounded px-2 py-1">
+        <span>~</span>
+        <input type="date" class="border rounded px-2 py-1">
+        <button class="bg-primary text-white px-3 py-1 rounded">查询</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="w-full text-sm border-collapse">
+        <thead>
+          <tr class="bg-gray-50">
+            <!-- <th class="border px-3 py-2 text-left">文号</th> -->
+            <!-- <th class="border px-3 py-2 text-left">收文单位</th> -->
+            <!-- <th class="border px-3 py-2 text-left">文件名称</th> -->
+            <!-- <th class="border px-3 py-2 text-left">发文时间</th> -->
+            <!-- <th class="border px-3 py-2 text-left">附件</th> -->
+			<th class="border px-3 py-2 text-left">文号</th>
+            <th class="border px-3 py-2 text-left">文件名称</th>
+            <th class="border px-3 py-2 text-left">MJ</th>
+            <th class="border px-3 py-2 text-left">发文时间</th>
+            <th class="border px-3 py-2 text-left">办理期限</th>
+            <th class="border px-3 py-2 text-left">来函单位</th>
+            <th class="border px-3 py-2 text-left">办结时间</th>
+            <th class="border px-3 py-2 text-left">附件</th>
+          </tr>
+        </thead>
+        <tbody id="subSendBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!--下表格：本单位回复记录 -->
+  <div class="bg-white rounded shadow p-4">
+    <div class="flex justify-between items-center mb-3">
+      <h3 class="font-bold">发送材料</h3>
+      <div class="flex gap-3 items-center">
+        <div class="flex gap-2 text-sm">
+          <input placeholder="文号" class="border rounded px-2 py-1">
+          <input placeholder="文件名称" class="border rounded px-2 py-1">
+          <input type="date" class="border rounded px-2 py-1">
+          <span>~</span>
+          <input type="date" class="border rounded px-2 py-1">
+          <button class="bg-primary text-white px-3 py-1 rounded">查询</button>
+        </div>
+        <!-- <button id="addReplyBtn" class="bg-green-500 text-white px-3 py-1 rounded text-sm"> -->
+          <!-- <i class="fa fa-plus"></i> 新增回复文件 -->
+        <!-- </button> -->
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="w-full text-sm border-collapse">
+        <thead>
+          <tr class="bg-gray-50">
+            <th class="border px-3 py-2 text-left">收文单位</th>
+            <th class="border px-3 py-2 text-left">文号</th>
+            <th class="border px-3 py-2 text-left">文件名称</th>
+            <th class="border px-3 py-2 text-left">MJ</th>
+            <th class="border px-3 py-2 text-left">发文时间</th>
+            <th class="border px-3 py-2 text-left">附件</th>
+          </tr>
+        </thead>
+        <tbody id="subReplyBody"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<!--新增回复弹窗（简易）-->
+<div id="replyModal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center z-50">
+  <div class="bg-white w-max-md rounded p-5">
+    <h4 class="font-bold mb-4">新增回复文件</h4>
+    <div class="space-y-3 text-sm">
+      <div><label>收文单位</label><input class="w-full border rounded px-2 py-1.5 mt-1" value="华东子公司" disabled></div>
+      <div><label>文号</label><input class="w-full border rounded px-2 py-1.5 mt-1"></div>
+      <div><label>文件名称</label><input class="w-full border rounded px-2 py-1.5 mt-1"></div>
+      <div><label>发文时间</label><input type="date" class="w-full border rounded px-2 py-1.5 mt-1"></div>
+      <div><label>附件上传</label><input type="file" class="mt-1"></div>
+    </div>
+    <div class="flex justify-end gap-3 mt-5">
+      <button id="closeModal" class="px-4 py-1.5 border rounded">取消</button>
+      <button class="px-4 py-1.5 bg-primary text-white rounded">保存提交</button>
+    </div>
+  </div>
+</div>
+
+<script>
+//模拟：当前登录子公司为u1 华东子公司
+const currentUnitId = "u1";
+const sendData = [
+  {id:1,docNo:"Z-2026-001",unitId:"u1",unitName:"华东子公司",title:"关于XX项目征求意见稿",mj:"jm",dateLine:"2026-04-10",fromUnit:"国家局",sendTime:"2026-03-10",attach:"意见稿.pdf"},
+];
+const replyData = [
+  {id:1,unitId:"u1",unitName:"华东子公司",docNo:"H-2026-FH01",title:"华东子公司关于XX项目的回复函",mj:"jm",sendTime:"2026-03-18",attach:"华东回复.pdf"},
+];
+
+//渲染子公司两张表格
+function renderSubPage(){
+  const sendDom = document.getElementById("subSendBody");
+  sendDom.innerHTML = sendData.map(r=>`
+    <tr>
+      <td class="border px-3 py-2">${r.docNo}</td>
+      <td class="border px-3 py-2">${r.title}</td>
+      <td class="border px-3 py-2">${r.mj}</td>
+      <td class="border px-3 py-2">${r.sendTime}</td>
+      <td class="border px-3 py-2">${r.dateLine}</td>
+      <td class="border px-3 py-2">${r.fromUnit}</td>
+      <td class="border px-3 py-2"><a class="text-primary">请选择</a></td>
+      <td class="border px-3 py-2"><a class="text-primary"><i class="fa fa-paperclip"></i> ${r.attach}</a></td>
+    </tr>
+  `).join("");
+
+  const replyDom = document.getElementById("subReplyBody");
+  replyDom.innerHTML = replyData.map(r=>`
+    <tr>
+      <td class="border px-3 py-2">${r.unitName}</td>
+      <td class="border px-3 py-2">${r.docNo}</td>
+      <td class="border px-3 py-2">${r.title}</td>
+      <td class="border px-3 py-2">${r.mj}</td>
+      <td class="border px-3 py-2">${r.sendTime}</td>
+      <td class="border px-3 py-2"><a class="text-primary"><i class="fa fa-paperclip"></i> ${r.attach}</a></td>
+    </tr>
+  `).join("");
+}
+
+renderSubPage();
+
+//弹窗逻辑
+const modal = document.getElementById("replyModal");
+document.getElementById("addReplyBtn").onclick = ()=>modal.classList.remove("hidden");
+document.getElementById("closeModal").onclick = ()=>modal.classList.add("hidden");
+</script>
+</body>
+</html>

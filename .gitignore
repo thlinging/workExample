@@ -37,3 +37,6 @@ src/directives.zip
 
 # claude-guard 保护的文件
 .claude/settings.json.backup-*
+
+# 源码目录 src/views/document/ 的压缩备份，不入库
+src/views/document.zip

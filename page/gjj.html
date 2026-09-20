@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>总公司-意见稿及回复管理</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#165DFF',
+            sidebarBg: '#f8fafc'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html, body {height:100%;margin:0;padding:0;}
+    .tree-box {overflow-y:auto;}
+    .table-wrap {overflow:auto;}
+  </style>
+</head>
+<body class="bg-gray-50 h-full flex flex-col">
+<!--顶部导航-->
+<header class="h-14 bg-primary text-white flex items-center px-6 shadow shrink-0">
+  <h1 class="text-lg font-medium">意见稿征求管理平台｜总公司管理员</h1>
+  <div class="ml-auto text-sm">
+    <i class="fa fa-user"></i> 总公司管理员
+  </div>
+</header>
+
+<div class="flex flex-1 overflow-hidden">
+  <!-- 左侧树区域 -->
+  <aside class="w-72 bg-sidebarBg border-r border-gray-200 flex flex-col shrink-0">
+    <div class="p-3 border-b border-gray-200">
+      <div class="text-sm font-medium mb-2">中央和国家机关名称</div>
+      <input id="unitSearch" placeholder="搜索中央和国家机关名称" class="w-full border rounded px-2 py-1.5 text-sm mb-2">
+      <div class="flex gap-2 items-center mb-2">
+        <label class="text-sm">发文年份</label>
+        <select id="yearFilter" class="flex-1 border rounded px-2 py-1 text-sm">
+          <option value="">全部年份</option>
+          <option value="2026">2026</option>
+          <option value="2025">2025</option>
+        </select>
+		<button class="bg-primary text-white px-3 py-1 rounded">查询</button>
+      </div>
+      <div class="flex gap-2 items-center">
+        <label class="text-sm">排序</label>
+        <select id="sortByCount" class="flex-1 border rounded px-2 py-1 text-sm">
+          <option value="desc">按函件数量降序</option>
+          <option value="asc">按函件数量升序</option>
+        </select>
+      </div>
+    </div>
+    <div class="p-2 text-sm text-gray-500">收文单位（点击切换查看）</div>
+    <div id="treeContainer" class="tree-box flex-1 px-2 pb-2"></div>
+  </aside>
+
+  <!-- 右侧双表格区域 -->
+  <main class="flex-1 flex flex-col p-5 gap-5 overflow-hidden">
+    <!-- 上表格：总公司下发意见稿 -->
+    <div class="bg-white rounded shadow p-4 flex flex-col">
+      <div class="flex justify-between items-center mb-3">
+        <h3 class="font-bold">发送材料</h3>
+        <div class="flex gap-2 text-sm">
+          <input placeholder="文号" class="border rounded px-2 py-1">
+          <input placeholder="文件名称" class="border rounded px-2 py-1">
+          <input type="date" class="border rounded px-2 py-1">
+          <span class="text-gray-400">~</span>
+          <input type="date" class="border rounded px-2 py-1">
+          <button class="bg-primary text-white px-3 py-1 rounded">查询</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-gray-50">
+              <th class="border px-3 py-2 text-left">文号</th>
+              <th class="border px-3 py-2 text-left">收文单位</th>
+              <th class="border px-3 py-2 text-left">文件名称</th>
+              <th class="border px-3 py-2 text-left">MJ</th>
+              <th class="border px-3 py-2 text-left">发文时间</th>
+              <th class="border px-3 py-2 text-left">办理期限</th>
+              <th class="border px-3 py-2 text-left">附件</th>
+            </tr>
+          </thead>
+          <tbody id="sendTableBody">
+            <!-- 数据行JS渲染 -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 下表格：子公司回复文件 -->
+    <div class="bg-white rounded shadow p-4 flex flex-col">
+      <div class="flex justify-between items-center mb-3">
+        <h3 class="font-bold">接收材料</h3>
+        <div class="flex gap-2 text-sm">
+          <input placeholder="文号" class="border rounded px-2 py-1">
+          <input placeholder="文件名称" class="border rounded px-2 py-1">
+          <input type="date" class="border rounded px-2 py-1">
+          <span class="text-gray-400">~</span>
+          <input type="date" class="border rounded px-2 py-1">
+          <button class="bg-primary text-white px-3 py-1 rounded">查询</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-gray-50">
+              <!-- <th class="border px-3 py-2 text-left">收文单位</th> -->
+              <th class="border px-3 py-2 text-left">文号</th>
+              <th class="border px-3 py-2 text-left">文件名称</th>
+              <th class="border px-3 py-2 text-left">MJ</th>
+              <th class="border px-3 py-2 text-left">发文时间</th>
+              <th class="border px-3 py-2 text-left">来函单位</th>
+              <th class="border px-3 py-2 text-left">办理期限</th>
+              <th class="border px-3 py-2 text-left">对应函件（支持选择国家局外发的函件）</th>
+              <th class="border px-3 py-2 text-left">附件</th>
+              <th class="border px-3 py-2 text-left">操作</th>
+            </tr>
+          </thead>
+          <tbody id="replyTableBody">
+            <!-- JS渲染 -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+//模拟后端数据
+const unitList = [
+  {unitId:"u1",unitName:"华东子公司",sendCount:8},
+  {unitId:"u2",unitName:"华南子公司",sendCount:5},
+  {unitId:"u3",unitName:"华北子公司",sendCount:12},
+  {unitId:"u4",unitName:"西部子公司",sendCount:3},
+];
+//总公司下发意见稿
+const sendData = [
+  {id:1,docNo:"Z-2026-001",unitId:"u1",unitName:"华东子公司",title:"关于XX项目征求意见稿",mj:"jm",sendTime:"2026-03-10",dateLine:"2026-04-10",attach:"意见稿.pdf"},
+  {id:2,docNo:"Z-2026-002",unitId:"u3",unitName:"华北子公司",title:"制度修订征求意见稿",mj:"jm",sendTime:"2026-04-05",dateLine:"2026-05-10",attach:"制度修订.docx"},
+  {id:3,docNo:"Z-2026-003",unitId:"u2",unitName:"华南子公司",title:"预算调整意见稿",mj:"jm",sendTime:"2026-05-12",dateLine:"2026-06-10",attach:"预算调整.pdf"},
+];
+//子公司回复数据
+const replyData = [
+  {id:1,unitId:"u1",unitName:"华东子公司",docNo:"H-2026-FH01",mj:"jm",title:"华东子公司关于XX项目的回复函",sendTime:"2026-03-18",fromUnit:"华南子公司",dateLine:"2026-04-10",attach:"华东回复.pdf"},
+  {id:2,unitId:"u3",unitName:"华北子公司",docNo:"H-2026-FH02",mj:"jm",title:"华北子公司制度修订回复意见",sendTime:"2026-04-12",fromUnit:"华东子公司",dateLine:"2026-04-10",attach:"华北回复.docx"},
+];
+
+let selectedUnitId = null;
+
+//渲染左侧单位树
+function renderTree(list){
+  const dom = document.getElementById("treeContainer");
+  dom.innerHTML = "";
+  list.forEach(u=>{
+    const item = document.createElement("div");
+    item.className = `px-2 py-1.5 mb-1 rounded cursor-pointer hover:bg-gray-100 text-sm flex justify-between ${selectedUnitId===u.unitId?'bg-blue-100':''}`;
+    item.innerHTML = `<span><i class="fa fa-building-o mr-1"></i>${u.unitName}</span><span class="text-gray-400">[${u.sendCount}件]</span>`;
+    item.onclick = ()=>{
+      selectedUnitId = u.unitId;
+      renderTree(unitList);
+      renderTable(selectedUnitId);
+    }
+    dom.appendChild(item);
+  })
+}
+
+//渲染右侧两张表格
+function renderTable(filterUnitId){
+  let sendRows = sendData;
+  let replyRows = replyData;
+  if(filterUnitId){
+    sendRows = sendData.filter(d=>d.unitId===filterUnitId);
+    replyRows = replyData.filter(d=>d.unitId===filterUnitId);
+  }
+  //下发表格
+  const sendTbody = document.getElementById("sendTableBody");
+  sendTbody.innerHTML = sendRows.map(r=>`
+    <tr>
+      <td class="border px-3 py-2">${r.docNo}</td>
+      <td class="border px-3 py-2">${r.unitName}</td>
+      <td class="border px-3 py-2">${r.title}</td>
+      <td class="border px-3 py-2">${r.mj}</td>
+      <td class="border px-3 py-2">${r.sendTime}</td>
+      <td class="border px-3 py-2">${r.dateLine}</td>
+      <td class="border px-3 py-2"><a href="#" class="text-primary"><i class="fa fa-paperclip"></i> ${r.attach}</a></td>
+    </tr>
+  `).join("");
+  //回复表格
+  const replyTbody = document.getElementById("replyTableBody");
+  replyTbody.innerHTML = replyRows.map(r=>`
+    <tr>
+      <td class="border px-3 py-2">${r.docNo}</td>
+      <td class="border px-3 py-2">${r.title}</td>
+      <td class="border px-3 py-2">${r.mj}</td>
+      <td class="border px-3 py-2">${r.sendTime}</td>
+      <td class="border px-3 py-2">${r.fromUnit}</td>
+      <td class="border px-3 py-2">${r.dateLine}</td>
+      <td class="border px-3 py-2"><a href="#" class="text-primary">请选择</a></td>
+      <td class="border px-3 py-2"><a href="#" class="text-primary"><i class="fa fa-paperclip"></i> ${r.attach}</a></td>
+      <td class="border px-3 py-2"><a href="#" class="text-primary">上传到办理环节</a></td>
+    </tr>
+  `).join("");
+}
+
+//初始化
+renderTree(unitList);
+renderTable(null);
+
+//树筛选、排序简单绑定
+document.getElementById("sortByCount").addEventListener("change",e=>{
+  const arr = [...unitList];
+  if(e.target.value==="desc") arr.sort((a,b)=>b.sendCount-a.sendCount);
+  else arr.sort((a,b)=>a.sendCount-b.sendCount);
+  renderTree(arr);
+})
+</script>
+</body>
+</html>

@@ -28,6 +28,17 @@ const routes = [
     path: '/easy-tree',
     name: 'EasyTreeDemo',
     component: () => import(/* webpackChunkName: "easy-tree" */ '@/views/EasyTreeDemo.vue')
+  },
+  // 意见稿及回复管理：总公司端 / 子公司端，两端共用 src/api/a/document.js
+  {
+    path: '/document/hq',
+    name: 'HeadquarterDocument',
+    component: () => import(/* webpackChunkName: "document" */ '@/views/document/HeadquarterDocument.vue')
+  },
+  {
+    path: '/document/unit',
+    name: 'UnitDocument',
+    component: () => import(/* webpackChunkName: "document" */ '@/views/document/UnitDocument.vue')
   }
 ]
 
