@@ -1,0 +1,48 @@
+/**
+ * tree-locator 的定位高亮动画。
+ *
+ * 用法：在用到定位的页面（或全局入口）里 @import 本文件，不要放在 scoped 样式里
+ * ——规则要作用到树组件内部的 .el-tree-node，scoped 的属性选择器打不进去。
+ *
+ * 变量都是 !default，在 @import 之前重新赋值即可覆盖：
+ *
+ *   $ve-locate-flash-color: rgba(64, 158, 255, 0.35);
+ *   @import '~@/utils/tree-locator.scss';
+ */
+
+// 闪烁的底色。默认取薄荷绿，换成你项目的主题色即可
+$ve-locate-flash-color: rgba(0, 212, 164, 0.35) !default;
+$ve-locate-flash-duration: 1.5s !default;
+// 与 createTreeLocator 的 flashClass 选项保持一致
+$ve-locate-class: 've-locating' !default;
+
+@keyframes ve-locate-flash {
+  0% {
+    background-color: $ve-locate-flash-color;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+/**
+ * class 挂在**树根**上，靠 .is-current 选中目标行——而不是直接给那一行的 DOM 加 class。
+ * 因为虚拟滚动的行 DOM 是复用的：给某个 .el-tree-node 加了 class，用户一滚动，
+ * 这个 DOM 就被拿去渲染别的数据了，闪烁会跟着串到无关的行上去。
+ * 挂在树根 + is-current，语义跟着数据走，不会串。
+ */
+.#{$ve-locate-class} {
+  .el-tree-node.is-current > .el-tree-node__content {
+    animation: ve-locate-flash $ve-locate-flash-duration ease-out;
+  }
+}
+
+// 尊重系统的「减弱动效」设置：不做动画，但保留一个静态底色，定位结果依然可辨
+@media (prefers-reduced-motion: reduce) {
+  .#{$ve-locate-class} {
+    .el-tree-node.is-current > .el-tree-node__content {
+      animation: none;
+      background-color: $ve-locate-flash-color;
+    }
+  }
+}
