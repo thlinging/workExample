@@ -250,13 +250,24 @@ export default {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px 20px;
+  /* 间距不用 flex 的 gap：Chrome < 84、Safari < 14.1、老 Electron/内嵌内核都不认它，
+     一旦不支持就是「换行后各项完全贴在一起」，退化得很难看。
+     改成「子项 margin-right/bottom + 容器负 margin-bottom 抵消末行」，
+     视觉等效于原来的 gap: 12px 20px，且只用到 margin，兼容性无下限。
+     注意没有采用「容器四周负 margin」那种写法：它会让首列左移 10px，
+     破坏本组件与外层表单其它行的左对齐。 */
+  margin-bottom: -12px;
 }
 
 /* 单条材料：标签 + 输入框/文本 + 单位 横向排列 */
 .mcl-item {
   display: inline-flex;
   align-items: center;
+  /* 列距 20px。每行最后一项右侧也会多出这 20px，但内容左对齐、右侧是自由空间，看不出来 */
+  margin-right: 20px;
+  /* 行距 12px。末行多出来的那份由容器的 margin-bottom: -12px 抵消，
+     所以单行时组件的视觉占位与改动前完全一致 */
+  margin-bottom: 12px;
 }
 
 .mcl-label {
