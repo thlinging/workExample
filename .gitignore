@@ -29,3 +29,11 @@ yarn.lock
 .playwright-mcp/
 src/directives.zip
 /ueditor-*.png
+
+# 受保护的环境变量文件（claude-guard）
+.env
+.env.development
+.env.production
+
+# claude-guard 保护的文件
+.claude/settings.json.backup-*
