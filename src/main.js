@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router'
 import './plugins/ant-design-vue'
 import './plugins/element-ui'
+// 虚拟滚动树：样式复用上面 element 主题里的 .el-tree，故必须排在 element 之后
+import './plugins/vue-easy-tree'
 // Mintlify 设计系统：令牌层（字体 + CSS 变量）在前，组件覆盖层在后。
 // 放在组件库样式之后引入，确保覆盖层能压过 antd/element 的默认样式。
 import './theme/design-tokens.css'

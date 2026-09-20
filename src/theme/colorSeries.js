@@ -27,7 +27,12 @@ function getElementSerials(color) {
     // 按钮 :active 文字/边框 = mix(黑, 主色, 10%)（$--button-active-shade-percent）
     varyColor.mix('#000', color, 0.1),
     // slider 滑块 hover = mix(主色, 黑, 97%)（$--slider-button-hover-color）
-    varyColor.mix(color, '#000', 0.97)
+    varyColor.mix(color, '#000', 0.97),
+    // 树「当前高亮行」底色 = mix(白, 主色, 92%)。tree.scss 里直接写死了 92%，
+    // 不走 light-1~9 那套 10% 步进，不补这一档换主色时树的选中行不会跟着变。
+    // （element 官方的换肤色序同样漏了它，这里是本项目补的一档，供 el-tree 与
+    //   vue-easy-tree 共用——两者类名相同、样式同源。）
+    varyColor.mix('#fff', color, 0.92)
   ])
 }
 

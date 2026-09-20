@@ -23,6 +23,11 @@ const routes = [
     path: '/theme',
     name: 'ThemeDemo',
     component: () => import(/* webpackChunkName: "theme" */ '@/views/ThemeDemo.vue')
+  },
+  {
+    path: '/easy-tree',
+    name: 'EasyTreeDemo',
+    component: () => import(/* webpackChunkName: "easy-tree" */ '@/views/EasyTreeDemo.vue')
   }
 ]
 

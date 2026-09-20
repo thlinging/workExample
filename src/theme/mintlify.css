@@ -376,3 +376,37 @@ body {
   border: 1px solid var(--m-hairline);
   box-shadow: none;
 }
+
+/* ── 树：element 的 .el-tree，也是 vue-easy-tree 的样式来源 ──────────
+   vue-easy-tree 的类名与 element 完全同名（$namespace: 'el'），所以这一段
+   同时管住两者，普通树与虚拟滚动树外观一致。
+   选中行（.el-tree--highlight-current .is-current）的底色**故意不覆盖**：
+   与 Tabs 激活态、分页当前页同理，留给换肤引擎跟随主色（默认=薄荷）。
+   注意那一档是 mix(白, 主色, 92%)，不在 element 官方色序里，由本项目在
+   colorSeries.js 末尾补齐——少了那一档，换主色时树的选中行是不跟随的。 */
+#app .el-tree {
+  font-family: var(--m-font-sans);
+  font-size: var(--m-fs-sm);
+  color: var(--m-charcoal);
+  /* element 默认给树白底；置空以便嵌在卡片/分栏里时与容器同底 */
+  background: transparent;
+}
+#app .el-tree-node__label {
+  font-size: var(--m-fs-sm);
+}
+#app .el-tree-node__content:hover,
+#app .el-tree-node:focus > .el-tree-node__content {
+  background: var(--m-surface);
+}
+#app .el-tree-node__expand-icon {
+  color: var(--m-stone);
+}
+/* 叶子节点的占位箭头本应隐形：element 用 .el-tree-node__expand-icon.is-leaf
+   (0,2,0) 置 transparent，会被上面带 #app 的规则 (1,2,0) 盖掉，这里补回。 */
+#app .el-tree-node__expand-icon.is-leaf {
+  color: transparent;
+}
+#app .el-tree__empty-text {
+  color: var(--m-stone);
+  font-size: var(--m-fs-caption);
+}

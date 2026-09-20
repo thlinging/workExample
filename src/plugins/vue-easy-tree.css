@@ -1,0 +1,28 @@
+/*
+ * vue-easy-tree 功能性补丁 —— 只补 element-ui theme-chalk 里没有、而虚拟滚动模式
+ * 必需的样式。视觉（字体/间距/hover 底色/选中态）不在这里，统一由
+ * src/theme/mintlify.css 末尾的 el-tree 段负责。
+ *
+ * 背景：本项目复用 element 全量 theme-chalk 作为树的样式来源（理由见
+ * plugins/vue-easy-tree.js）。把 vue-easy-tree 自带的 tree.scss 与 element 2.15.12
+ * 的 tree.scss 逐行 diff 过，忽略格式后实质差异只有两条：
+ *
+ *   1) element 有 `.el-tree-node__content { height: 26px }`，vue-easy-tree 没有。
+ *      —— 无需处理：虚拟节点在模板里打了 inline `height: ${itemSize}px`，
+ *      优先级高于 class 规则，itemSize 取任何值都对；非虚拟模式则回到
+ *      element 原生的 26px，本就是期望行为。
+ *
+ *   2) vue-easy-tree 多出 `.el-tree-node__expand-icon-no-transition`，element 没有。
+ *      —— 必须补，就是下面这条。
+ */
+
+/*
+ * 虚拟滚动靠复用 DOM 节点渲染不同数据行。element 给展开箭头挂了
+ * `transition: transform .3s ease-in-out`，复用时若上一行是展开态(90°)、
+ * 下一行是收起态(0°)，角度突变会触发这段过渡——表现为滚动时箭头无端乱转。
+ * 虚拟节点因此额外挂了 -no-transition 类来禁掉过渡；element 里没有这个类名，
+ * 缺了这条规则动画就会漏出来。
+ */
+.el-tree-node__expand-icon-no-transition {
+  transition: none;
+}

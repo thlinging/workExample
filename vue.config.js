@@ -13,6 +13,11 @@ module.exports = {
   assetsDir: 'static',
   productionSourceMap: false,
   lintOnSave: process.env.NODE_ENV !== 'production',
+  // vue-easy-tree 走 src 源码引入（理由见 src/plugins/vue-easy-tree.js），而它的
+  // tree-node.vue / virtual-tree-node.vue 用的是 <script type="text/jsx">。
+  // babel 默认 exclude node_modules，不转译就会把 JSX 原样丢给 webpack 解析而报错，
+  // 故必须把它加进 transpileDependencies。
+  transpileDependencies: ['@wchbrad/vue-easy-tree'],
   devServer: {
     host: '0.0.0.0',
     port: 8080,
