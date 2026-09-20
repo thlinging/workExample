@@ -16,6 +16,42 @@
   overflow: auto;
 }
 
+/* 左右边缘热区：内嵌 iframe 时把指针事件从 iframe 手里抢回父文档，
+   否则左右边缘的缩放判定区被 iframe 整条盖住、根本抓不到（详见 edge-hotzone.js）。
+   平时是一条 3px 窄条，指针从弹窗外侧靠近时整条张开到 12px。 */
+.v-resize-modal-target .v-resize-hotzone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 10;
+  width: var(--v-hotzone-idle, 3px);
+  background: transparent;
+  /* 只给 background 过渡：宽度必须瞬时变化，加过渡会让指针扑空 */
+  transition: background 0.12s;
+}
+
+/* 不声明 cursor：它是继承属性，interactjs 会把 ew-resize 设在 .ant-modal-content 上，
+   不写才能继承到当前边对应的方向光标 */
+.v-resize-modal-target .v-resize-hotzone--left {
+  left: 0;
+}
+
+.v-resize-modal-target .v-resize-hotzone--right {
+  right: 0;
+}
+
+.v-resize-modal-target .v-resize-hotzone.is-active {
+  width: var(--v-hotzone-active, 12px);
+  /* 张开时显一条浅色竖条：边缘本来就难找，给个落点提示 */
+  background: rgba(0, 0, 0, 0.06);
+}
+
+/* 全屏期间 fullscreen 指令已 resizable({ enabled: false })，
+   热区必须一并让开，否则只会白白吃掉 iframe 边缘那几 px 的点击 */
+.v-modal-fullscreen .v-resize-hotzone {
+  pointer-events: none;
+}
+
 .v-resize-modal--show-handle .ant-modal-content::after {
   content: '';
   position: absolute;

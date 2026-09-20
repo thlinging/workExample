@@ -7,6 +7,7 @@ import {
   translateBy,
   commitTranslate
 } from '../modal-shared'
+import { createEdgeHotzone } from './edge-hotzone'
 import './style.css'
 
 const CTX = '__resizeModalCtx__'
@@ -26,6 +27,16 @@ function resolveOptions(binding) {
     // 边缘缩放热区宽度（px）：离边/角多近就能触发缩放。太小不好对准，故默认放宽到 16；
     // 业务可通过 margin 选项覆盖。注意值越大越靠内，会占用边缘附近内容的点击区域。
     margin: v.margin != null ? v.margin : 16,
+    // 左右边缘热区（见 edge-hotzone.js）：内嵌 iframe 会吞掉指针事件，左右边缘抓不住。
+    // 'auto'（默认）= 检测到 iframe/embed/object 才铺；true = 一律铺；false = 关闭。
+    // 默认 auto 是为了不打扰普通弹窗——常开窄条会压住 .ant-modal-body 原生滚动条最外几 px。
+    edgeHotzone: v.edgeHotzone != null ? v.edgeHotzone : 'auto',
+    // 热区张开后的宽度（px）。会被 clamp 到 margin 以内：超出判定区的部分不触发缩放，
+    // 只会白白吃掉 iframe 的点击。
+    hotzoneSize: v.hotzoneSize != null ? v.hotzoneSize : 12,
+    // 平时常开的窄条宽度（px）：给「指针本来就在 iframe 里、直接横移到边缘」那段盲区兜底。
+    // 设 0 即取消兜底，完全不遮挡 iframe。
+    hotzoneIdleSize: v.hotzoneIdleSize != null ? v.hotzoneIdleSize : 3,
     showHandle: v.showHandle !== false,
     // 缩放时把弹窗边缘约束在视口内：碰到屏幕边缘就停（默认开启，可传 false 关闭）
     restrictToViewport: v.restrictToViewport !== false,
@@ -291,6 +302,17 @@ function doBind(el, binding, modal, content) {
   el[CTX] = ctx
   getShared(modal).resize = ctx
 
+  // 左右边缘热区：iframe 铺满 body 时把指针事件抢回父文档。
+  // 只做左右——上下边的判定区落在 header/footer 上，一直是通的。
+  // 放在 ctx 之后建：isBusy 要读 ctx.resizing（缩放中不开合，避免热区宽度抖动）。
+  ctx.hotzone = createEdgeHotzone(content, {
+    mode: opts.edgeHotzone,
+    activeSize: opts.hotzoneSize,
+    idleSize: opts.hotzoneIdleSize,
+    margin: opts.margin,
+    isBusy: () => ctx.resizing
+  })
+
   // 高度缺省：延迟到入场动画稳定后再自动测量并套用真实内容高度。
   if (rawH == null) scheduleAutoHeight(el)
 }
@@ -350,6 +372,8 @@ function release(el) {
   if (ctx.timer) clearTimeout(ctx.timer)
   if (ctx.cancelAutoHeight) ctx.cancelAutoHeight() // 取消未触发的高度延迟测量，避免泄漏
   if (ctx.onViewportResize) window.removeEventListener('resize', ctx.onViewportResize)
+  // 热区：摘 DOM + 解绑 document 上的 pointermove + 停掉 MutationObserver
+  if (ctx.hotzone) ctx.hotzone.destroy()
   // 缩放进行中被卸载：end 不会触发，补一次解锁，避免全局选区锁泄漏
   if (ctx.resizing) unlockInteraction()
   if (ctx.interactable) ctx.interactable.unset()
