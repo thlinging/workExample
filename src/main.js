@@ -10,11 +10,14 @@ import './plugins/vue-easy-tree'
 import './theme/design-tokens.css'
 import './theme/mintlify.css'
 import ResizableModal from './plugins/resizable-modal'
+import Confirm3 from './plugins/confirm3'
 import installModalDirectives from './directives'
 import VueUeditorWrap from 'vue-ueditor-wrap'
 import ThemeManager from './theme/ThemeManager'
 
 Vue.use(ResizableModal)
+// 三按钮版 confirm，挂出 this.$antConfirm3（样式与行为同 $confirm，仅多一个按钮）
+Vue.use(Confirm3)
 // 默认导出即安装函数，Vue.use 会以 Vue 为参调用它注册三个指令
 Vue.use(installModalDirectives)
 // UEditor 1.4.3 的 Vue 封装（wrapper 本身不含 UEditor，资源在组件里用 UEDITOR_HOME_URL 指向 CDN）
